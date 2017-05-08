@@ -11,7 +11,7 @@ import java.text.ParseException;
  */
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {
-        try (InputStream is = new FileInputStream("in.txt")) {
+        try (InputStream is = new FileInputStream("input.txt")) {
             Parser p = new Parser();
             Tree parseTree = p.parse(is);
             Tree.dumpParseTree(parseTree, "out/dump.txt");
