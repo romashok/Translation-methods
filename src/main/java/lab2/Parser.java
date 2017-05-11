@@ -149,6 +149,10 @@ public class Parser {
     Tree parse(InputStream io) throws ParseException {
         lex = new LexicalAnalyzer(io);
         lex.nextToken();
-        return E();
+        Tree e = E();
+        if (lex.curToken() != Token.END) {
+            throw new AssertionError();
+        }
+        return e;
     }
 }
