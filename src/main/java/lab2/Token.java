@@ -5,5 +5,5 @@ package lab2;
  * @version 1.0
  */
 enum Token {
-    NOT, AND, OR, XOR, LPAREN, RPAREN, VAR, END, EPS;
+    NOT, AND, OR, XOR, LPAREN, RPAREN, VAR, END, EPS, IMPLICATION;
 }

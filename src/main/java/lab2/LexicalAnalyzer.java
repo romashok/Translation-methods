@@ -30,6 +30,7 @@ public class LexicalAnalyzer {
         names.put(Token.RPAREN, ")");
         names.put(Token.END, "$");
         names.put(Token.EPS, "ε");
+        names.put(Token.IMPLICATION, "->");
     }
 
 
@@ -77,6 +78,14 @@ public class LexicalAnalyzer {
             case ')':
                 curToken = Token.RPAREN;
                 nextChar();
+                break;
+            case '-':
+                nextChar();
+                if (curChar != '>') {
+                    throw new ParseException("Illegal character " + curChar, curPos);
+                }
+                nextChar();
+                curToken = Token.IMPLICATION;
                 break;
             case '$':
 //            case -1:

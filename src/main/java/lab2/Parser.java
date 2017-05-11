@@ -10,6 +10,34 @@ import java.text.ParseException;
 public class Parser {
     private LexicalAnalyzer lex;
 
+    private Tree I() throws ParseException {
+        switch (lex.curToken()) {
+            case NOT:
+            case VAR:
+            case LPAREN:
+                Tree e = E();
+                Tree cont = Id();
+                return new Tree("I", e, cont);
+            default:
+                throw new AssertionError();
+        }
+    }
+
+    private Tree Id() throws ParseException {
+        switch (lex.curToken()) {
+            case IMPLICATION:
+                // skip ->
+                lex.nextToken();
+                Tree i = I();
+                return new Tree("I'", new Tree("->"), i);
+            case END:
+            case RPAREN:
+                return new Tree(String.format("I'(%s)", lex.getEps()));
+            default:
+                throw new AssertionError();
+        }
+    }
+
     private Tree E() throws ParseException {
         switch (lex.curToken()) {
             case NOT:
@@ -32,6 +60,7 @@ public class Parser {
                 return new Tree("E'", p, cont);
             case END:
             case RPAREN:
+            case IMPLICATION:
                 return new Tree(String.format("E'(%s)", lex.getEps()));
             default:
                 throw new AssertionError();
@@ -100,6 +129,7 @@ public class Parser {
             case XOR:
             case END:
             case RPAREN:
+            case IMPLICATION:
                 return new Tree(String.format("T'(%s)", lex.getEps()));
             default:
                 throw new AssertionError();
@@ -149,10 +179,10 @@ public class Parser {
     Tree parse(InputStream io) throws ParseException {
         lex = new LexicalAnalyzer(io);
         lex.nextToken();
-        Tree e = E();
+        Tree i = I();
         if (lex.curToken() != Token.END) {
             throw new AssertionError();
         }
-        return e;
+        return i;
     }
 }
