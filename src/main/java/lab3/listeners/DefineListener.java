@@ -30,8 +30,31 @@ public class DefineListener extends FunctionalBaseListener {
 
         System.out.print(String.format("def %s(%s):\n", funcName, args));
 
+        if (ctx.getChildCount() <= 4) {
+            // recursive if-else | expression
+            CondListener condListener = new CondListener(scopeVars);
+            ctx.cond().enterRule(condListener);
+            condListener.getBody().forEach(line -> System.out.println("  " + line));
+        } else {
+            makeGuardCond(ctx, 0, "  if ");
+            makeGuardBody(ctx, 0);
+
+            for (int i = 1; i < ctx.guard().size(); i++) {
+                makeGuardCond(ctx, i, "  else if ");
+                makeGuardBody(ctx, i);
+            }
+        }
+    }
+
+    void makeGuardCond(FunctionalParser.DefineContext ctx, int i, String stmt) {
+        ExprListener exprListener = new ExprListener(scopeVars);
+        ctx.guard(i).expr().enterRule(exprListener);
+        System.out.print(stmt + exprListener.toString() + ":\n");
+    }
+
+    void makeGuardBody(FunctionalParser.DefineContext ctx, int i) {
         CondListener condListener = new CondListener(scopeVars);
-        ctx.cond().enterRule(condListener);
-        condListener.getBody().forEach(line -> System.out.println("  " + line));
+        ctx.body(i).cond().enterRule(condListener);
+        condListener.getBody().forEach(line -> System.out.println("    " + line));
     }
 }

@@ -121,6 +121,18 @@ public class FunctionalBaseListener implements FunctionalListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFunc(FunctionalParser.FuncContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParam(FunctionalParser.ParamContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParam(FunctionalParser.ParamContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

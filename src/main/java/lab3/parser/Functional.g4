@@ -4,13 +4,14 @@ grammar Functional;
 package lab3;
 }
 
-deflist: (define NEXT)*;
+deflist: (define NEWLINE?)*;
 
 define
     : ID args '=' cond
+    | ID args ('|' guard '=' body NEWLINE?)+
     ;
 
-guard: cond;
+guard: expr;
 
 body: cond;
 
@@ -34,15 +35,23 @@ constant
     ;
 
 func
-    : name=ID params+=(BOOL | NUM | ID)* // variable or n positional function | predicate
+    : name=ID (param)* // variable or n positional function | predicate
     ;
 
-ID: [a-zA-Z]+[a-zA-Z0-9]* ;
-NUM: [0-9]+('.'[0-9]+)? ;
+param
+    : expr BINOP expr
+    | constant
+    | ID
+    | '(' expr ')'
+    ;
+
 BOOL: 'True' | 'False';
+NUM: [0-9]+('.'[0-9]+)? ;
 BINOP: (ARIFM | LOGIC);
 ARIFM: '+' | '-' | '*' | '/' ;
-LOGIC: '==' | '!=' | '&&' | '||';
+LOGIC: '==' | '!=' | '>=' | '>' | '<=' | '<' |'&&' | '||' ;
+ID: [a-zA-Z]+[a-zA-Z0-9]* ;
 
-NEXT: '\n\n'[\n]*;
-WS: [ ]+ -> skip;
+NEWLINE: '\n'+;
+//NEXT: [\n]*;
+WS: [ \t\r]+ -> skip;

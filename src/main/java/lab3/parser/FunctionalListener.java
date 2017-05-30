@@ -99,4 +99,14 @@ public interface FunctionalListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunc(FunctionalParser.FuncContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FunctionalParser#param}.
+	 * @param ctx the parse tree
+	 */
+	void enterParam(FunctionalParser.ParamContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FunctionalParser#param}.
+	 * @param ctx the parse tree
+	 */
+	void exitParam(FunctionalParser.ParamContext ctx);
 }

@@ -2,7 +2,6 @@ package lab3.listeners;
 
 import lab3.FunctionalBaseListener;
 import lab3.FunctionalParser;
-import org.antlr.v4.runtime.Token;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,12 +20,14 @@ public class FuncListener extends FunctionalBaseListener {
 
         String funcName = ctx.name.getText();
         if (ctx.getChildCount() > 1) {
-            funcRepr = String.format("%s(%s)",
-                    funcName,
-                    ctx.params
-                            .stream()
-                            .map(Token::getText)
-                            .collect(Collectors.joining(", ")));
+            String params = ctx.param().stream()
+                    .map(e -> {
+                        ParamListener paramListener = new ParamListener(scopeVars);
+                        e.enterRule(paramListener);
+                        return paramListener.toString();
+                    })
+                    .collect(Collectors.joining(", "));
+            funcRepr = String.format("%s(%s)", funcName, params);
         } else {
             if (scopeVars.contains(funcName)) {
                 funcRepr = funcName;
