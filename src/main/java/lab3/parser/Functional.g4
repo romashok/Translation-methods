@@ -48,10 +48,9 @@ param
 BOOL: 'True' | 'False';
 NUM: [0-9]+('.'[0-9]+)? ;
 BINOP: (ARIFM | LOGIC);
-ARIFM: '+' | '-' | '*' | '/' ;
+ARIFM: '+' | '-' | '*' | '/'  | '%' | 'div' ;
 LOGIC: '==' | '!=' | '>=' | '>' | '<=' | '<' |'&&' | '||' ;
 ID: [a-zA-Z]+[a-zA-Z0-9]* ;
 
 NEWLINE: '\n'+;
-//NEXT: [\n]*;
 WS: [ \t\r]+ -> skip;
