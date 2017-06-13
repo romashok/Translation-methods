@@ -1,7 +1,7 @@
 package lab3.listeners;
 
-import lab3.FunctionalBaseListener;
-import lab3.FunctionalParser;
+import lab3.parser.FunctionalBaseListener;
+import lab3.parser.FunctionalParser;
 
 import java.util.ArrayList;
 import java.util.List;

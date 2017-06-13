@@ -1,7 +1,7 @@
 grammar Functional;
 
 @header {
-package lab3;
+package lab3.parser;
 }
 
 deflist: (define NEWLINE?)*;

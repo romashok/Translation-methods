@@ -1,6 +1,6 @@
 // Generated from Functional.g4 by ANTLR 4.5.3
 
-package lab3;
+package lab3.parser;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
